@@ -15,12 +15,10 @@ export class CreateEventDto {
   images?: string[];
 
   @IsNotEmpty()
-  @IsDate()
-  startDate: Date;
+  startDate: string;
 
   @IsNotEmpty()
-  @IsDate()
-  endDate: Date;
+  endDate: string;
 
   @IsNotEmpty()
   @IsInt()
