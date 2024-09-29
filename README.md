@@ -23,8 +23,11 @@
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
 ## Description
+By Running 'npm run start:dev' 
+the app will run on 
+https://localhost:5000
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+//Please add .env file attached in the mail
 
 ## Project setup
 
