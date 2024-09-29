@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Param, Body, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, Put, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
 import { EventService } from './events.service';
 import { Event } from './entities/event.entity';
 import { User } from 'src/users/entities/user.entity';
+import { CreateEventDto } from './dto/create-event.dto';
 
 @Controller('events')
 export class EventController {
@@ -13,12 +14,12 @@ export class EventController {
   }
 
   @Post()
-  create(@Body() event: Event, @Body('userId') userId: number): Promise<Event> {
+  @UsePipes(new ValidationPipe({ transform: true }))
+  async create(@Body() createEventDto: CreateEventDto, @Body('userId') userId: number): Promise<Event> {
     const user = new User();
-    user.id = userId;
-    return this.eventService.create(event, userId);
+    user.id = createEventDto.userId; 
+    return this.eventService.create(createEventDto, userId);
   }
-
   @Put(':id')
   update(@Param('id') id: string, @Body() event: Event, @Body('userId') userId: number): Promise<Event> {
     const user = new User();

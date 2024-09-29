@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Event } from './entities/event.entity';
 import { User } from 'src/users/entities/user.entity';
+import { CreateEventDto } from './dto/create-event.dto';
 
 @Injectable()
 export class EventService {
@@ -18,18 +19,19 @@ export class EventService {
   }
 
 
-  async create(event: Event, userId: number): Promise<Event> {
+  async create(createEventDto: CreateEventDto, userId: number): Promise<Event> {
     // Check if the user exists
     const user = await this.userRepository.findOne({ where: { id: userId } });
     if (!user) {
       throw new NotFoundException(`User with ID ${userId} not found`);
     }
 
-    event.user = user;
+    const event = this.eventRepository.create({ ...createEventDto, user });
+
     try {
-      return await this.eventRepository.save(event);
+      return await this.eventRepository.save(event); 
     } catch (error) {
-      throw new Error(`Failed to create event: ${error.message}`);
+      throw new BadRequestException(`Failed to create event: ${error.message}`); 
     }
   }
 
