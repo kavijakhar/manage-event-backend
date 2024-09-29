@@ -12,7 +12,7 @@ export class Event {
   @Column({ type: 'text' })
   description: string;
 
-  @Column('text', { array: true })  // To store images as an array of URLs
+  @Column('text', { array: true })
   images: string[];
 
   @Column()
